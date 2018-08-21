@@ -1,9 +1,11 @@
 .progressBar {
   position: relative;
   height: 20px;
-  width: 800px;
+  width: 100%;
+  max-width: 800px;
   border-radius: 30px;
-  border: 1px solid; }
+  border: 1px solid;
+  margin: 0 auto; }
   .progressBar__filler {
     background: #ef509e;
     height: 100%;
