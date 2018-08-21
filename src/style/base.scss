@@ -18,11 +18,8 @@ body {
 @media screen and (min-width: 600px) {
   @supports (display: grid) {
     .wrapper {
-      font-family: 'Press Start 2P';
-      background-image: url('../images/background.png');
-      background-size: contain;
-      height: 100vh;
       display: grid;
+      background-size: contain;
       grid-column-gap: 18px;
       grid-row-gap: 20px;
       grid-template-columns: auto repeat(12, minmax(auto, 100px)) auto;
@@ -40,6 +37,13 @@ body {
       grid-area: ct;
     }
   }
+}
+
+.wrapper {
+  font-family: 'Press Start 2P';
+  background-image: url('../images/background.png');
+  background-size: cover;
+  min-height: 100vh;
 }
 
 .header {
