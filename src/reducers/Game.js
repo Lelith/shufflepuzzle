@@ -2,6 +2,7 @@ import * as types from '../actions';
 
 const initialState = {
   gameStatus: 'new_game',
+  roundResults: [],
 };
 
 function reducerGame(state = initialState, action) {
@@ -11,6 +12,13 @@ function reducerGame(state = initialState, action) {
       return {
         ...state,
         gameStatus,
+      };
+    }
+    case types.ADD_RESULT: {
+      const { roundResults } = action;
+      return {
+        ...state,
+        roundResults,
       };
     }
     default:

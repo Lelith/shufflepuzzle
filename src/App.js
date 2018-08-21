@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import './App.css';
+import GameField from './components/GameField/GameField';
+
+require('./style/base.css');
+
 
 class App extends Component {
   constructor(props) {
@@ -9,6 +12,7 @@ class App extends Component {
     this.startGame = this.startGame.bind(this);
     this.finishGame = this.finishGame.bind(this);
     this.resetGame = this.resetGame.bind(this);
+    this.finishRound = this.finishRound.bind(this);
   }
 
   startGame() {
@@ -29,6 +33,11 @@ class App extends Component {
     setGameStatus(newStatus);
   }
 
+  finishRound(newResult) {
+    const { roundResults, addResult } = this.props;
+    roundResults.push(newResult);
+    addResult(roundResults);
+  }
 
   render() {
     const { gameStatus } = this.props;
@@ -54,6 +63,10 @@ class App extends Component {
           */
           <div>
             <h2>play game</h2>
+            <GameField
+              roundsPlayed={0}
+              callBack={this.finishRound}
+            />
             <button onClick={this.finishGame} type="button">Finish the Game</button>
           </div>
           )}
@@ -76,7 +89,9 @@ class App extends Component {
 
 App.propTypes = {
   gameStatus: PropTypes.oneOf(['new_game', 'playing', 'finished']).isRequired,
+  roundResults: PropTypes.array.isRequired,
   setGameStatus: PropTypes.func.isRequired,
+  addResult: PropTypes.func.isRequired,
 };
 
 export default App;

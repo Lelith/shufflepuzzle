@@ -1,0 +1,10 @@
+@import url("https://fonts.googleapis.com/css?family=Press+Start+2P");
+* {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box; }
+
+body {
+  font-family: sans-serif;
+  color: #020004;
+  font-size: 14px; }
