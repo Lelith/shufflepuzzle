@@ -28,7 +28,9 @@ class App extends Component {
       } else if (newRounds < 3) {
         newRounds = 3;
       }
+      newRounds = parseInt(newRounds, 10);
     }
+
 
     setRoundsToPlay(newRounds);
   }
@@ -74,7 +76,12 @@ class App extends Component {
   }
 
   render() {
-    const { gameStatus, roundsPlayed, roundResults } = this.props;
+    const {
+      gameStatus,
+      roundsPlayed,
+      roundsToPlay,
+      roundResults,
+    } = this.props;
     return (
       <div className="App">
         <h1>Shuffle Puzzle</h1>
@@ -89,7 +96,7 @@ class App extends Component {
               <GameForm
                 onSubmit={this.startGame}
                 onChange={this.setRounds}
-                roundsPlayed={roundsPlayed}
+                roundsToPlay={roundsToPlay}
               />
             </div>
             )}
@@ -103,6 +110,7 @@ class App extends Component {
             <h2>play game</h2>
             <GameField
               roundsPlayed={roundsPlayed}
+              roundsToPlay={roundsToPlay}
               callBack={this.finishRound}
             />
           </div>
@@ -114,7 +122,7 @@ class App extends Component {
           show game field
           */
           <div>
-            <GameResults results={roundResults}/>
+            <GameResults results={roundResults} />
             <button onClick={this.resetGame} type="button">Start a new Game</button>
           </div>
           )}

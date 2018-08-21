@@ -5,6 +5,7 @@ import Shapes from './Shapes';
 import GameCard from '../GameCard/GameCard';
 import GameCards from '../GameCards/GameCards';
 import Countdown from '../Countdown/Countdown';
+import ProgressBar from '../ProgressBar/ProgressBar';
 
 function getRandomInt(min, max) {
   min = Math.ceil(min);
@@ -95,7 +96,7 @@ class GameField extends Component {
     const { roundSummary } = this.state;
     const { callBack } = this.props;
     const { target } = event;
-    let result ='undefined';
+    let result = 'undefined';
 
     if (target.value === 'true') {
       // you won
@@ -158,6 +159,8 @@ class GameField extends Component {
       roundsToPlay,
     } = this.props;
 
+    const progress = Math.floor((roundsPlayed / roundsToPlay) * 100);
+
     return (
       <div className="gameField">
         show my cards
@@ -172,6 +175,7 @@ class GameField extends Component {
         )}
         { showCards && (
           <div>
+            <ProgressBar percentage={progress} />
             <GameCards
               playingShapes={playingShapes}
             />
