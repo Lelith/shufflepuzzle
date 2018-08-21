@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+require('./GameResults.css');
+
 const GameResults = (props) => {
   const {
     results,
@@ -16,7 +18,7 @@ const GameResults = (props) => {
   return (
     <div className="gameResults">
       <h2>See your Highscore</h2>
-      <ul>
+      <ul className="gameResults__list">
         {resultList}
       </ul>
     </div>
