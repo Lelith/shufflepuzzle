@@ -86,16 +86,21 @@ class GameField extends Component {
     // stop timer and read time.
     this.stopTimer();
     const { secondsElapsed } = this.state;
+    const { callBack } = this.props;
     console.log(secondsElapsed);
     const { target } = event;
     console.log(target.value);
+
+
     if (target.value === 'true') {
       // you won
       console.log('you won');
+      callBack(secondsElapsed);
       this.setState({ match: true });
     } else {
       // you loose
       this.setState({ match: false });
+      callBack('missed');
       console.log('you loose');
     }
   }
@@ -155,6 +160,7 @@ class GameField extends Component {
 
 GameField.propTypes = {
   roundsPlayed: PropTypes.number.isRequired,
+  callBack: PropTypes.func.isRequired,
 };
 
 export default GameField;

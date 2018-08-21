@@ -9,4 +9,13 @@ describe('actions', () => {
     };
     expect(actions.setGameStatus(gameStatus)).toEqual(expectedAction);
   });
+
+  it('should add new Results', () => {
+    const roundResults = [2, 'missed'];
+    const expectedAction = {
+      type: 'ADD_RESULT',
+      roundResults,
+    };
+    expect(actions.addResult(roundResults)).toEqual(expectedAction);
+  });
 });

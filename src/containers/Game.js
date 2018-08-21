@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import App from '../App';
 import {
   setGameStatus,
+  addResult,
 } from '../actions/index';
 
 const mapStateToProps = state => (
@@ -12,6 +13,9 @@ const mapStateToProps = state => (
 const mapDispatchToProps = dispatch => ({
   setGameStatus: (gameStatus) => {
     dispatch(setGameStatus(gameStatus));
+  },
+  addResult: (roundResults) => {
+    dispatch(addResult(roundResults));
   },
 });
 

@@ -12,6 +12,7 @@ class App extends Component {
     this.startGame = this.startGame.bind(this);
     this.finishGame = this.finishGame.bind(this);
     this.resetGame = this.resetGame.bind(this);
+    this.finishRound = this.finishRound.bind(this);
   }
 
   startGame() {
@@ -32,6 +33,11 @@ class App extends Component {
     setGameStatus(newStatus);
   }
 
+  finishRound(newResult) {
+    const { roundResults, addResult } = this.props;
+    roundResults.push(newResult);
+    addResult(roundResults);
+  }
 
   render() {
     const { gameStatus } = this.props;
@@ -59,6 +65,7 @@ class App extends Component {
             <h2>play game</h2>
             <GameField
               roundsPlayed={0}
+              callBack={this.finishRound}
             />
             <button onClick={this.finishGame} type="button">Finish the Game</button>
           </div>
@@ -82,7 +89,9 @@ class App extends Component {
 
 App.propTypes = {
   gameStatus: PropTypes.oneOf(['new_game', 'playing', 'finished']).isRequired,
+  roundResults: PropTypes.array.isRequired,
   setGameStatus: PropTypes.func.isRequired,
+  addResult: PropTypes.func.isRequired,
 };
 
 export default App;
