@@ -66,9 +66,9 @@ class GameField extends Component {
     // add function and set isGoal
     playingCards.map((card, index) => {
       card.isGoal = index === goalShape;
-      card.onClick = this.checkMatch;
+      card.onClick = this.stopTimer;
       card.style = {
-        width: getRandomInt(24, 500),
+        width: getRandomInt(44, 400),
         padding: getRandomInt(0, 20),
       };
     });
@@ -77,25 +77,24 @@ class GameField extends Component {
       goalShape: playingCards[goalShape].src,
       playingShapes: playingCards,
       showGoal: true,
+    }, () => {
+      setTimeout(() => {
+        this.setState({ showGoal: false, showCards: true });
+        this.startTimer();
+      }, 10000);
     });
-
-    setTimeout(() => {
-      this.setState({ showGoal: false, showCards: true });
-      this.startTimer();
-    }, 10000);
   }
 
   startRound() {
+    this.setState({
+      match: 'ongoing',
+    });
     this.setPlayingShapes();
   }
 
-
-  checkMatch(event) {
-    // stop timer and save time.
-    this.stopTimer();
+  checkMatch(target) {
     const { roundSummary } = this.state;
     const { callBack } = this.props;
-    const { target } = event;
     let result = 'undefined';
 
     if (target.value === 'true') {
@@ -122,12 +121,16 @@ class GameField extends Component {
     this.interval = setInterval(this.tick, 1000);
   }
 
-  stopTimer() {
+  stopTimer(event) {
+    const { target } = event;
     clearInterval(this.interval);
     const { secondsElapsed } = this.state;
     this.setState({
       roundSummary: secondsElapsed,
-    }, this.setState({ secondsElapsed: 0 }));
+      secondsElapsed: 0,
+    }, () => {
+      this.checkMatch(target);
+    });
   }
 
   tick() {
@@ -167,11 +170,12 @@ class GameField extends Component {
         <ProgressBar percentage={progress} />
         {showGoal && (
           <div className="gameField__content">
-            <h3>This is the card you have to find.</h3>
+            <h3>This is the symbol you have to find.</h3>
             <Countdown secondsRemaining={10} />
             <GameCard
               isGoal
               shape={goalShape}
+              className="singleCard"
             />
           </div>
         )}
