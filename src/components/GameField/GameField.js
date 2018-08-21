@@ -19,8 +19,12 @@ class GameField extends Component {
     this.state = {
       match: false,
       playingShapes: [],
-    }
+      secondsElapsed: 0,
+    };
 
+    this.startTimer = this.startTimer.bind(this);
+    this.stopTimer = this.stopTimer.bind(this);
+    this.tick = this.tick.bind(this);
     this.checkMatch = this.checkMatch.bind(this);
   }
 
@@ -73,11 +77,16 @@ class GameField extends Component {
     this.setState({ showGoal: true });
     setTimeout(() => {
       this.setState({ showGoal: false, showCards: true });
-      // this.startTimer();
+      this.startTimer();
     }, 10000);
   }
 
+
   checkMatch(event) {
+    // stop timer and read time.
+    this.stopTimer();
+    const { secondsElapsed } = this.state;
+    console.log(secondsElapsed);
     const { target } = event;
     console.log(target.value);
     if (target.value === 'true') {
@@ -89,6 +98,27 @@ class GameField extends Component {
       this.setState({ match: false });
       console.log('you loose');
     }
+  }
+
+  startTimer() {
+    this.interval = setInterval(this.tick, 1000);
+  }
+
+  stopTimer() {
+    clearInterval(this.interval);
+    const { secondsElapsed } = this.state;
+    this.setState({
+      roundSummary: secondsElapsed,
+    });
+  }
+
+  tick() {
+    let { secondsElapsed } = this.state;
+    secondsElapsed += 1;
+
+    this.setState({
+      secondsElapsed,
+    });
   }
 
   render() {
