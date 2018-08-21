@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import './App.css';
+import GameField from './components/GameField/GameField';
+
+require('./style/base.css');
+
 
 class App extends Component {
   constructor(props) {
@@ -54,6 +57,9 @@ class App extends Component {
           */
           <div>
             <h2>play game</h2>
+            <GameField
+              roundsPlayed={0}
+            />
             <button onClick={this.finishGame} type="button">Finish the Game</button>
           </div>
           )}

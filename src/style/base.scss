@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
+@import './variables';
+
+* {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+  color: map-get($colors, text);
+  font-size: map-get($fontsizes, default);
+}
