@@ -1,0 +1,14 @@
+.gameForm {
+  width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  text-align: center; }
+  .gameForm__input {
+    border: solid 2px #020004;
+    font-size: 16px;
+    padding: 10px; }
+  .gameForm__label {
+    color: #020004;
+    display: block;
+    margin-bottom: 10px; }

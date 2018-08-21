@@ -7,7 +7,7 @@ const GameResults = (props) => {
   } = props;
 
   const resultList = results.map((result, index) => (
-    <li key={result}>
+    <li key={`${index}-${result}`}>
       <span>Round {index + 1}: </span>
       {result !== 'missed' ? `${result}s` : result }
     </li>

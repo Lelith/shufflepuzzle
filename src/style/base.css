@@ -7,4 +7,48 @@
 body {
   font-family: sans-serif;
   color: #020004;
-  font-size: 14px; }
+  font-size: 14px;
+  background-repeat: no-repeat;
+  background-size: cover; }
+
+@media screen and (min-width: 600px) {
+  @supports (display: grid) {
+    .wrapper {
+      font-family: 'Press Start 2P';
+      background-image: url("../images/background.png");
+      background-size: contain;
+      height: 100vh;
+      display: grid;
+      grid-column-gap: 18px;
+      grid-row-gap: 20px;
+      grid-template-columns: auto repeat(12, minmax(auto, 100px)) auto;
+      grid-template-areas: 'hd hd hd hd hd hd hd hd hd hd hd hd hd hd' '. . ct ct ct ct ct ct ct ct ct ct . .'; }
+    .header {
+      grid-area: hd; }
+    .pageContent {
+      grid-area: ct; } } }
+
+.header {
+  background-color: #491389;
+  color: #fff;
+  padding: 5px 20px;
+  height: 60px; }
+
+.pageContent {
+  color: #fff;
+  padding: 20px;
+  margin-bottom: 50px;
+  text-align: center; }
+
+button {
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 10px;
+  border: solid 2px #020004;
+  background-color: #ef509e;
+  box-shadow: inset -4px -4px 0px 0px #c7126b; }
+  button:hover {
+    color: #020004;
+    background-color: dark(#ef509e, 10);
+    box-shadow: inset -4px -4px 0px 0px #980e52; }

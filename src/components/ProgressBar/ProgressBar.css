@@ -3,7 +3,7 @@
   height: 20px;
   width: 800px;
   border-radius: 30px;
-  border: 1px solid #020004; }
+  border: 1px solid; }
   .progressBar__filler {
     background: #ef509e;
     height: 100%;

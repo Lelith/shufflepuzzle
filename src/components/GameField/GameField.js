@@ -163,9 +163,11 @@ class GameField extends Component {
 
     return (
       <div className="gameField">
-        show my cards
+        <h2>Choose the right card</h2>
+        <ProgressBar percentage={progress} />
         {showGoal && (
-          <div>
+          <div className="gameField__content">
+            <h3>This is the card you have to find.</h3>
             <Countdown secondsRemaining={10} />
             <GameCard
               isGoal
@@ -174,20 +176,19 @@ class GameField extends Component {
           </div>
         )}
         { showCards && (
-          <div>
-            <ProgressBar percentage={progress} />
+          <div className="gameField__content">
             <GameCards
               playingShapes={playingShapes}
             />
           </div>
         )}
         { match === 'won' && (
-          <div>
+          <div className="gameField__content">
             <h2>That was the right symbol!</h2>
           </div>
         )}
         { match === 'lost' && (
-          <div>
+          <div className="gameField__content">
             <h2>Sorry you lost this round</h2>
           </div>
         )}
