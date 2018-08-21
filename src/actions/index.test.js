@@ -18,4 +18,22 @@ describe('actions', () => {
     };
     expect(actions.addResult(roundResults)).toEqual(expectedAction);
   });
+
+  it('should set how many rounds a user can play', () => {
+    const roundsToPlay = 5;
+    const expectedAction = {
+      type: 'SET_ROUNDS_TOPLAY',
+      roundsToPlay,
+    };
+    expect(actions.setRoundsToPlay(roundsToPlay)).toEqual(expectedAction);
+  });
+
+  it('should uodate how many rounds are already played', () => {
+    const roundsPlayed = 2;
+    const expectedAction = {
+      type: 'SET_ROUNDS_PLAYED',
+      roundsPlayed,
+    };
+    expect(actions.setRoundsPlayed(roundsPlayed)).toEqual(expectedAction);
+  });
 });

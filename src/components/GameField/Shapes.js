@@ -10,6 +10,7 @@ import ShapeSmile from '../../images/smile.svg';
 import ShapeSquare from '../../images/square.svg';
 import ShapeStar from '../../images/star.svg';
 import ShapeTriangle from '../../images/triangle.svg';
+import ShapeEve from '../../images/eve.svg';
 
 
 const Shapes = [
@@ -25,6 +26,7 @@ const Shapes = [
   { src: ShapeSquare },
   { src: ShapeStar },
   { src: ShapeTriangle },
+  { src: ShapeEve },
 ];
 
 export default Shapes;

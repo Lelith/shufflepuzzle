@@ -20,6 +20,7 @@ class GameField extends Component {
       match: 'ongoing',
       playingShapes: [],
       secondsElapsed: 0,
+      roundSummary: 'less than one second',
     };
 
     this.startRound = this.startRound.bind(this);
@@ -40,6 +41,10 @@ class GameField extends Component {
     // user clicks on right shape --> save time as result for this round
     // user clicks on wrong shape --> save 'missed' as result for this round
     // user runs out of time --> save missed as result for this round
+  }
+
+  componentWillReceiveProps() {
+    this.startRound();
   }
 
   setPlayingShapes() {
@@ -85,27 +90,31 @@ class GameField extends Component {
 
 
   checkMatch(event) {
-    // stop timer and read time.
+    // stop timer and save time.
     this.stopTimer();
     const { roundSummary } = this.state;
     const { callBack } = this.props;
     const { target } = event;
+    let result ='undefined';
 
     if (target.value === 'true') {
       // you won
-      callBack(roundSummary);
+      result = roundSummary;
       this.setState({
         showCards: false,
         match: 'won',
       });
     } else {
       // you loose
+      result = 'missed';
       this.setState({
         showCards: false,
         match: 'lost',
       });
-      callBack('missed');
     }
+    setTimeout(() => {
+      callBack(result);
+    }, 1000);
   }
 
   startTimer() {
@@ -144,6 +153,11 @@ class GameField extends Component {
       match,
     } = this.state;
 
+    const {
+      roundsPlayed,
+      roundsToPlay,
+    } = this.props;
+
     return (
       <div className="gameField">
         show my cards
@@ -180,6 +194,7 @@ class GameField extends Component {
 
 GameField.propTypes = {
   roundsPlayed: PropTypes.number.isRequired,
+  roundsToPlay: PropTypes.number.isRequired,
   callBack: PropTypes.func.isRequired,
 };
 
