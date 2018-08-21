@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+require('./GameForm.css');
+
 const GameForm = (props) => {
   const {
     onSubmit,
@@ -10,8 +12,10 @@ const GameForm = (props) => {
 
 
   return (
-    <form>
-      <input type="number" name="roundsToPlay" onChange={onChange} value={roundsToPlay} min="3" max="10" />
+    <form className="gameForm">
+      <label htmlFor="roundsToPlay" className="gameForm__label">How many rounds do you want to play?
+      </label>
+      <input className="gameForm__input" id="roundsToPlay" type="number" name="roundsToPlay" onChange={onChange} value={roundsToPlay} min="3" max="10" />
       <button type="button" onClick={onSubmit}> Start game </button>
     </form>
   );

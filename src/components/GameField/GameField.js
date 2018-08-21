@@ -66,9 +66,9 @@ class GameField extends Component {
     // add function and set isGoal
     playingCards.map((card, index) => {
       card.isGoal = index === goalShape;
-      card.onClick = this.checkMatch;
+      card.onClick = this.stopTimer;
       card.style = {
-        width: getRandomInt(24, 500),
+        width: getRandomInt(44, 400),
         padding: getRandomInt(0, 20),
       };
     });
@@ -77,25 +77,24 @@ class GameField extends Component {
       goalShape: playingCards[goalShape].src,
       playingShapes: playingCards,
       showGoal: true,
+    }, () => {
+      setTimeout(() => {
+        this.setState({ showGoal: false, showCards: true });
+        this.startTimer();
+      }, 10000);
     });
-
-    setTimeout(() => {
-      this.setState({ showGoal: false, showCards: true });
-      this.startTimer();
-    }, 10000);
   }
 
   startRound() {
+    this.setState({
+      match: 'ongoing',
+    });
     this.setPlayingShapes();
   }
 
-
-  checkMatch(event) {
-    // stop timer and save time.
-    this.stopTimer();
+  checkMatch(target) {
     const { roundSummary } = this.state;
     const { callBack } = this.props;
-    const { target } = event;
     let result = 'undefined';
 
     if (target.value === 'true') {
@@ -122,12 +121,16 @@ class GameField extends Component {
     this.interval = setInterval(this.tick, 1000);
   }
 
-  stopTimer() {
+  stopTimer(event) {
+    const { target } = event;
     clearInterval(this.interval);
     const { secondsElapsed } = this.state;
     this.setState({
       roundSummary: secondsElapsed,
-    }, this.setState({ secondsElapsed: 0 }));
+      secondsElapsed: 0,
+    }, () => {
+      this.checkMatch(target);
+    });
   }
 
   tick() {
@@ -163,31 +166,33 @@ class GameField extends Component {
 
     return (
       <div className="gameField">
-        show my cards
+        <h2>Choose the right card</h2>
+        <ProgressBar percentage={progress} />
         {showGoal && (
-          <div>
+          <div className="gameField__content">
+            <h3>This is the symbol you have to find.</h3>
             <Countdown secondsRemaining={10} />
             <GameCard
               isGoal
               shape={goalShape}
+              className="singleCard"
             />
           </div>
         )}
         { showCards && (
-          <div>
-            <ProgressBar percentage={progress} />
+          <div className="gameField__content">
             <GameCards
               playingShapes={playingShapes}
             />
           </div>
         )}
         { match === 'won' && (
-          <div>
+          <div className="gameField__content">
             <h2>That was the right symbol!</h2>
           </div>
         )}
         { match === 'lost' && (
-          <div>
+          <div className="gameField__content">
             <h2>Sorry you lost this round</h2>
           </div>
         )}

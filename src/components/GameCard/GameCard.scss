@@ -1,6 +1,18 @@
+@import '../../style/variables.scss';
+
 .gameCard {
   svg {
     width: 100%;
     height: 100%;
+
+    path,
+    circle {
+      fill: map-get($colors, textLight);
+    }
+  }
+
+  &.singleCard {
+    width: 300px;
+    margin: 0 auto;
   }
 }

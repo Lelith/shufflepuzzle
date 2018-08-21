@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SVG from 'react-inlinesvg';
+import classNames from 'class-names';
 
 require('./GameCard.css');
 
@@ -10,12 +11,18 @@ const GameCard = (props) => {
     onClick,
     style,
     shape,
+    className,
   } = props;
 
+  const cardClasses = classNames(
+    'gameCard',
+    className,
+  );
+
   return (
-    <div className="gameCard" style={style}>
+    <div className={cardClasses} style={style}>
       <label htmlFor={shape}>
-        <input type="radio" id={shape} value={isGoal} name="GameCard" onChange={onClick} />
+        <input hidden type="radio" id={shape} value={isGoal} name="GameCard" onChange={onClick} />
         <SVG src={shape} />
       </label>
     </div>
@@ -27,11 +34,13 @@ GameCard.propTypes = {
   shape: PropTypes.string.isRequired,
   onClick: PropTypes.func,
   style: PropTypes.object,
+  className: PropTypes.string,
 };
 
 GameCard.defaultProps = {
   style: {},
   onClick: () => {},
+  className: '',
 };
 
 export default GameCard;

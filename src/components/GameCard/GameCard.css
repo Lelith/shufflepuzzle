@@ -1,3 +1,10 @@
 .gameCard svg {
   width: 100%;
   height: 100%; }
+  .gameCard svg path,
+  .gameCard svg circle {
+    fill: #fff; }
+
+.gameCard.singleCard {
+  width: 300px;
+  margin: 0 auto; }

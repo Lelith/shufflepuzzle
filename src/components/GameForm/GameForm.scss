@@ -1,0 +1,21 @@
+@import '../../style/variables.scss';
+
+.gameForm {
+  width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: map-get($colors, textLight);
+  text-align: center;
+
+  &__input {
+    border: solid 2px map-get($colors, dark);
+    font-size: map-get($fontsizes, medium);
+    padding: 10px;
+  }
+
+  &__label {
+    color: map-get($colors, dark);
+    display: block;
+    margin-bottom: 10px;
+  }
+}

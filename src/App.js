@@ -83,50 +83,39 @@ class App extends Component {
       roundResults,
     } = this.props;
     return (
-      <div className="App">
-        <h1>Shuffle Puzzle</h1>
-        <div>
-          {gameStatus === 'new_game'
-            && (
-            /*
-              show form to start game
-            */
-            <div>
-              <h2>start new game</h2>
-              <GameForm
-                onSubmit={this.startGame}
-                onChange={this.setRounds}
-                roundsToPlay={roundsToPlay}
-              />
-            </div>
-            )}
-
-          {gameStatus === 'playing'
-          && (
+      <div className="wrapper">
+        <header className="header">
+          <h1>Shuffle Puzzle</h1>
+        </header>
+        {gameStatus === 'new_game' && (
           /*
-          show game field
+            show form to start game
           */
-          <div>
-            <h2>play game</h2>
-            <GameField
-              roundsPlayed={roundsPlayed}
+          <div className="pageContent">
+            <h2>start new game</h2>
+            <GameForm
+              onSubmit={this.startGame}
+              onChange={this.setRounds}
               roundsToPlay={roundsToPlay}
-              callBack={this.finishRound}
             />
           </div>
-          )}
-
-          {gameStatus === 'finished'
-          && (
-          /*
-          show game field
-          */
-          <div>
-            <GameResults results={roundResults} />
-            <button onClick={this.resetGame} type="button">Start a new Game</button>
-          </div>
-          )}
+        )}
+        {gameStatus === 'playing' && (
+        <div className="pageContent">
+          <h2>play game</h2>
+          <GameField
+            roundsPlayed={roundsPlayed}
+            roundsToPlay={roundsToPlay}
+            callBack={this.finishRound}
+          />
         </div>
+        )}
+        {gameStatus === 'finished' && (
+        <div className="pageContent">
+          <GameResults results={roundResults} />
+          <button onClick={this.resetGame} type="button">Start a new Game</button>
+        </div>
+        )}
       </div>
     );
   }
