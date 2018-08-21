@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import GameForm from './components/GameForm/GameForm';
 import GameField from './components/GameField/GameField';
 
 require('./style/base.css');
@@ -12,7 +13,43 @@ class App extends Component {
     this.startGame = this.startGame.bind(this);
     this.finishGame = this.finishGame.bind(this);
     this.resetGame = this.resetGame.bind(this);
+    this.setRounds = this.setRounds.bind(this);
     this.finishRound = this.finishRound.bind(this);
+  }
+
+  setRounds(event) {
+    const { setRoundsToPlay } = this.props;
+    const { target } = event;
+    let newRounds = target.value;
+    if (newRounds !== '') {
+      if (newRounds > 10) {
+        newRounds = 10;
+      } else if (newRounds < 3) {
+        newRounds = 3;
+      }
+    }
+
+    setRoundsToPlay(newRounds);
+  }
+
+  finishRound(newResult) {
+    const {
+      roundResults,
+      addResult,
+      roundsToPlay,
+      setRoundsPlayed,
+    } = this.props;
+    let { roundsPlayed } = this.props;
+
+    roundResults.push(newResult);
+    addResult(roundResults);
+
+    if (roundsPlayed < (roundsToPlay-1)) {
+      roundsPlayed += 1;
+      setRoundsPlayed(roundsPlayed);
+    } else {
+      this.finishGame();
+    }
   }
 
   startGame() {
@@ -28,19 +65,15 @@ class App extends Component {
   }
 
   resetGame() {
-    const { setGameStatus } = this.props;
+    const { setGameStatus, setRoundsPlayed, addResult } = this.props;
     const newStatus = 'new_game';
     setGameStatus(newStatus);
-  }
-
-  finishRound(newResult) {
-    const { roundResults, addResult } = this.props;
-    roundResults.push(newResult);
-    addResult(roundResults);
+    setRoundsPlayed(0);
+    addResult([]);
   }
 
   render() {
-    const { gameStatus } = this.props;
+    const { gameStatus, roundsPlayed } = this.props;
     return (
       <div className="App">
         <h1>Shuffle Puzzle</h1>
@@ -52,7 +85,11 @@ class App extends Component {
             */
             <div>
               <h2>start new game</h2>
-              <button onClick={this.startGame} type="button">Start Game</button>
+              <GameForm
+                onSubmit={this.startGame}
+                onChange={this.setRounds}
+                roundsPlayed={roundsPlayed}
+              />
             </div>
             )}
 
@@ -64,7 +101,7 @@ class App extends Component {
           <div>
             <h2>play game</h2>
             <GameField
-              roundsPlayed={0}
+              roundsPlayed={roundsPlayed}
               callBack={this.finishRound}
             />
             <button onClick={this.finishGame} type="button">Finish the Game</button>
@@ -90,8 +127,12 @@ class App extends Component {
 App.propTypes = {
   gameStatus: PropTypes.oneOf(['new_game', 'playing', 'finished']).isRequired,
   roundResults: PropTypes.array.isRequired,
+  roundsToPlay: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  roundsPlayed: PropTypes.number.isRequired,
   setGameStatus: PropTypes.func.isRequired,
   addResult: PropTypes.func.isRequired,
+  setRoundsToPlay: PropTypes.func.isRequired,
+  setRoundsPlayed: PropTypes.func.isRequired,
 };
 
 export default App;
