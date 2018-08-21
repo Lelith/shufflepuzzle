@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import GameForm from './components/GameForm/GameForm';
 import GameField from './components/GameField/GameField';
+import GameResults from './components/GameResults/GameResults';
 
 require('./style/base.css');
 
@@ -44,7 +45,7 @@ class App extends Component {
     roundResults.push(newResult);
     addResult(roundResults);
 
-    if (roundsPlayed < (roundsToPlay-1)) {
+    if (roundsPlayed < (roundsToPlay - 1)) {
       roundsPlayed += 1;
       setRoundsPlayed(roundsPlayed);
     } else {
@@ -73,7 +74,7 @@ class App extends Component {
   }
 
   render() {
-    const { gameStatus, roundsPlayed } = this.props;
+    const { gameStatus, roundsPlayed, roundResults } = this.props;
     return (
       <div className="App">
         <h1>Shuffle Puzzle</h1>
@@ -104,7 +105,6 @@ class App extends Component {
               roundsPlayed={roundsPlayed}
               callBack={this.finishRound}
             />
-            <button onClick={this.finishGame} type="button">Finish the Game</button>
           </div>
           )}
 
@@ -114,7 +114,7 @@ class App extends Component {
           show game field
           */
           <div>
-            <h2>show results</h2>
+            <GameResults results={roundResults}/>
             <button onClick={this.resetGame} type="button">Start a new Game</button>
           </div>
           )}
