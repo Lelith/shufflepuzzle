@@ -17,11 +17,12 @@ class GameField extends Component {
     super(props);
 
     this.state = {
-      match: false,
+      match: 'ongoing',
       playingShapes: [],
       secondsElapsed: 0,
     };
 
+    this.startRound = this.startRound.bind(this);
     this.startTimer = this.startTimer.bind(this);
     this.stopTimer = this.stopTimer.bind(this);
     this.tick = this.tick.bind(this);
@@ -29,8 +30,7 @@ class GameField extends Component {
   }
 
   componentDidMount() {
-    this.setPlayingShapes();
-    this.startGame();
+    this.startRound();
     // choose goal shape
     // choose (1 + rounds played) other shapes to fill the game field
     // add random paddings ( 0 - 20px) and widths (20px - 200px) to the shapes
@@ -70,38 +70,41 @@ class GameField extends Component {
     this.setState({
       goalShape: playingCards[goalShape].src,
       playingShapes: playingCards,
+      showGoal: true,
     });
-  }
 
-  startGame() {
-    this.setState({ showGoal: true });
     setTimeout(() => {
       this.setState({ showGoal: false, showCards: true });
       this.startTimer();
     }, 10000);
   }
 
+  startRound() {
+    this.setPlayingShapes();
+  }
+
 
   checkMatch(event) {
     // stop timer and read time.
     this.stopTimer();
-    const { secondsElapsed } = this.state;
+    const { roundSummary } = this.state;
     const { callBack } = this.props;
-    console.log(secondsElapsed);
     const { target } = event;
-    console.log(target.value);
-
 
     if (target.value === 'true') {
       // you won
-      console.log('you won');
-      callBack(secondsElapsed);
-      this.setState({ match: true });
+      callBack(roundSummary);
+      this.setState({
+        showCards: false,
+        match: 'won',
+      });
     } else {
       // you loose
-      this.setState({ match: false });
+      this.setState({
+        showCards: false,
+        match: 'lost',
+      });
       callBack('missed');
-      console.log('you loose');
     }
   }
 
@@ -114,16 +117,22 @@ class GameField extends Component {
     const { secondsElapsed } = this.state;
     this.setState({
       roundSummary: secondsElapsed,
-    });
+    }, this.setState({ secondsElapsed: 0 }));
   }
 
   tick() {
+    const { callBack } = this.props;
     let { secondsElapsed } = this.state;
     secondsElapsed += 1;
 
     this.setState({
       secondsElapsed,
     });
+
+    if (secondsElapsed >= 60) {
+      this.stopTimer();
+      callBack('missed');
+    }
   }
 
   render() {
@@ -132,6 +141,7 @@ class GameField extends Component {
       goalShape,
       showCards,
       playingShapes,
+      match,
     } = this.state;
 
     return (
@@ -151,6 +161,16 @@ class GameField extends Component {
             <GameCards
               playingShapes={playingShapes}
             />
+          </div>
+        )}
+        { match === 'won' && (
+          <div>
+            <h2>That was the right symbol!</h2>
+          </div>
+        )}
+        { match === 'lost' && (
+          <div>
+            <h2>Sorry you lost this round</h2>
           </div>
         )}
       </div>
